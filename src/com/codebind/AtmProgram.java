@@ -1,54 +1,47 @@
 package com.codebind;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 
 public class AtmProgram {
-    private JButton button_msg;
     private JPanel panelMain;
-    private JTextField textField1;
+    private JTextField textName;
     private JButton buttonName;
     private JButton showBalanceButton;
     private JButton withdrawCashButton;
     private JPanel panelMenu;
     private JPanel panelLogin;
     private JLabel labelName;
-    private JTextField txtName;
-    private JLabel message;
 
     private AtmHandler atm;
 
     public AtmProgram(AtmHandler newAtm) {
         this.atm = newAtm;
-        buttonName.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String txt = textField1.getText();
-                JOptionPane.showMessageDialog(null,"Welcome, " + txt);
-                panelLogin.setVisible(false);
-                panelMenu.setVisible(true);
-            }
+        buttonName.addActionListener(e -> {
+            String txt = textName.getText();
+            JOptionPane.showMessageDialog(null,"Welcome, " + txt);
+            panelLogin.setVisible(false);
+            panelMenu.setVisible(true);
         });
-        withdrawCashButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                double ans = Double.parseDouble(JOptionPane.showInputDialog(null, "Input value:"));
+        withdrawCashButton.addActionListener(e -> {
+            String response = JOptionPane.showInputDialog(null, "Input value:");
+            try {
+                double ans = Double.parseDouble(response);
+                if (ans < 0) {
+                    JOptionPane.showMessageDialog(null, "Input is negative.", "Error", JOptionPane.ERROR_MESSAGE);
+                } else if (ans == 0) {
+                    JOptionPane.showMessageDialog(null, "Input must be greater than 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
                 checkDrawer(ans);
+            } catch (Exception err) {
+                JOptionPane.showMessageDialog(null, "Input not in number format.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
-        showBalanceButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                checkBalance();
-            }
-        });
+        showBalanceButton.addActionListener(e -> checkBalance());
     }
 
     public void checkDrawer(Double withdrawAmount) {
         AtmHandler oldAtm = atm;
-        Boolean succeeded = true;
+        boolean succeeded = true;
         StringBuilder resultTxt = new StringBuilder("Notes: ");
         int withdraw = (int) (withdrawAmount * 100);
         // Check if ATM has enough money
@@ -84,11 +77,14 @@ public class AtmProgram {
     }
 
     public void checkBalance () {
-        String result = "The ATM has $" + atm.atmTotal() / 100;
+        StringBuilder result = new StringBuilder("The ATM has $" + atm.atmTotal() / 100);
         for (var item : atm.drawer) {
-            result += "\n" + item.getQuantity() + " * $" + (double) item.getNoteValue() / 100.00;
+            result.append("\n")
+                    .append(item.getQuantity())
+                    .append(" * $")
+                    .append((double) item.getNoteValue() / 100.00);
         }
-        JOptionPane.showMessageDialog(null, result);
+        JOptionPane.showMessageDialog(null, result.toString());
     }
 
 
