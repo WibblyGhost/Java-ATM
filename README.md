@@ -1,4 +1,6 @@
+
 # Java-ATM
+![Mahi Markets Coding Challenge Link](mahimarkets-java-test[1475].pdf)
 ### Purpose
 This project started as coding challenge that was given to me. From this challenge I have created a simple virtual ATM. This machine should be able to store different types and quantities of notes. Users should be able to withdraw notes and check the machines balance. Given the case where the withdrawal amount cannot be satisfied the ATM should be able to signify how much cash it can divvy. 
 
