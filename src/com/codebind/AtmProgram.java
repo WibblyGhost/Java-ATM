@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class Atm {
+public class AtmProgram {
     private JButton button_msg;
     private JPanel panelMain;
     private JTextField textField1;
@@ -21,24 +21,8 @@ public class Atm {
 
     private AtmHandler atm;
 
-    public Atm(AtmHandler atm) {
-        this.atm = atm;
-    }
-
-    public void checkDrawer(Double withdrawAmount) {
-        Integer withdraw = (int) (withdrawAmount * 100);
-        // Check if ATM has enough money
-        if (withdraw >= atm.atmTotal()) {
-            // ERROR not enough money in the ATM
-        } else {
-            for (AtmDrawer item : atm.drawer) {
-
-            }
-        }
-    }
-
-
-    public void Atm() {
+    public AtmProgram(AtmHandler newAtm) {
+        this.atm = newAtm;
         buttonName.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,7 +32,6 @@ public class Atm {
                 panelMenu.setVisible(true);
             }
         });
-
         withdrawCashButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -58,6 +41,45 @@ public class Atm {
         });
     }
 
+    public void checkDrawer(Double withdrawAmount) {
+        Integer remainder = 0;
+        Integer result = 0;
+        AtmHandler oldAtm = atm;
+        Boolean succeeded = true;
+        StringBuilder resultTxt = new StringBuilder("Notes: ");
+
+        long withdraw = (long) (withdrawAmount * 100);
+        // Check if ATM has enough money
+        if (withdraw > atm.atmTotal()) {
+            // ERROR not enough money in the ATM
+            succeeded = false;
+        } else {
+            for (AtmDrawer item : atm.drawer) {
+                Integer count = 0;
+                while (item.getAmount() > 0 && withdraw > 0){
+                    count = count + 1;
+                    withdraw = withdraw - item.getValue();
+                    item.subtractQuantity(1);
+                }
+                if (count > 0) {
+                    resultTxt.append(count);
+                    resultTxt.append(" * $");
+                    resultTxt.append(item.getValue() / 100);
+                    resultTxt.append(" ");
+                }
+            } if (!succeeded) {
+                // If the draws didn't have cash, return the ATM to it's old state.
+                atm = oldAtm;
+            } else {
+                this.atm = atm;
+                JOptionPane.showMessageDialog(null, resultTxt);
+            }
+        }
+    }
+
+
+
+
     public static void main(String[] args) {
         //    List is in cents, $100 = 10000 c
         Integer defaultNoteStocks = 20;
@@ -66,7 +88,7 @@ public class Atm {
 
         JFrame frame = new JFrame("Atm");
         // Pass in the atm machine
-        frame.setContentPane(new Atm(atmMachine).panelMain);
+        frame.setContentPane(new AtmProgram(atmMachine).panelMain);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

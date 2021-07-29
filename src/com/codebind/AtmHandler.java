@@ -10,6 +10,7 @@ public class AtmHandler {
         for (Integer integer : noteRange) {
             drawer.add(new AtmDrawer(integer, defaultNoteStocks));
         }
+        this.drawer = drawer;
     }
 
     public Integer getDrawerTotal(Integer index) {

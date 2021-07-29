@@ -8,6 +8,10 @@ public class AtmDrawer {
         quantity = amount;
     }
 
+    public void subtractQuantity(Integer newValue) {
+        quantity = newValue;
+    }
+
     public Integer getValue() {
         return notes;
     }
