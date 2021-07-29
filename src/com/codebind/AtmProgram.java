@@ -55,8 +55,8 @@ public class AtmProgram {
 
     /** Shows a breakdown of the drawer type and the number of notes in the drawer and checks whether the withdrawal can be made. */
     private void checkBalance () {
-        DecimalFormat df = new DecimalFormat("$#.00");
-        StringBuilder result = new StringBuilder("The ATM has " + df.format(atmInstance.atmTotal() / 100));
+        DecimalFormat df = new DecimalFormat("$0.00");
+        StringBuilder result = new StringBuilder("The ATM has " + df.format(atmInstance.atmTotal() / 100.00));
         for (var item : atmInstance.GetAllDrawers()) {
             result.append("\n")
                     .append(item.getQuantity())
@@ -69,8 +69,8 @@ public class AtmProgram {
     /** Initial function which is called on startup. */
     public static void main(String[] args) {
         //    List is in cents, $100 = 10000 c
-        Integer[] defaultNoteStocks = {20, 20, 20, 20, 20, 20, 20, 20};
-        Integer[] noteRange = {10000, 5000, 2000, 1000, 500, 100, 50, 20};
+        Integer[] defaultNoteStocks = {20, 20, 20, 20, 20, 20, 20, 20, 20};
+        Integer[] noteRange = {10000, 5000, 2000, 1000, 500, 100, 50, 20, 10};
         AtmHandler atmMachine = new AtmHandler(defaultNoteStocks, noteRange);
         JFrame frame = new JFrame("Atm");
         // Pass in the atm machine

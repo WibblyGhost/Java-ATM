@@ -47,7 +47,7 @@ public class AtmHandler {
         }
         StringBuilder resultTxt = new StringBuilder("Notes: ");
         int withdraw = (int) (withdrawalAmount * 100);
-        DecimalFormat df = new DecimalFormat("$#.00");
+        DecimalFormat df = new DecimalFormat("$0.00");
         // Check if ATM has enough money
         if (withdraw > atmTotal()) {
             // ERROR not enough money in the ATM
@@ -65,7 +65,7 @@ public class AtmHandler {
                     resultTxt.append("\n");
                     resultTxt.append(count);
                     resultTxt.append(" * ");
-                    resultTxt.append(df.format(item.getNoteValue() / 100));
+                    resultTxt.append(df.format(item.getNoteValue() / 100.00));
                     resultTxt.append(" ");
                 }
             }
