@@ -5,17 +5,14 @@ import java.util.List;
 
 public class AtmHandler {
     List<AtmDrawer> drawer;
-    public AtmHandler(Integer defaultNoteStocks, Integer[] noteRange) {
+    public AtmHandler(Integer[] defaultNoteStocks, Integer[] noteRange) {
         List<AtmDrawer> drawer = new ArrayList<AtmDrawer>();
-        for (Integer integer : noteRange) {
-            drawer.add(new AtmDrawer(integer, defaultNoteStocks));
+        for (Integer i = 0; i < noteRange.length; i++) {
+            drawer.add(new AtmDrawer(noteRange[i], defaultNoteStocks[i]));
         }
         this.drawer = drawer;
     }
 
-    public Integer getDrawerTotal(Integer index) {
-        return drawer.get(index).getTotal();
-    }
 
     public Integer atmTotal() {
         Integer runningTotal = 0;

@@ -9,14 +9,14 @@ public class AtmDrawer {
     }
 
     public void subtractQuantity(Integer newValue) {
-        quantity = newValue;
+        quantity = quantity - newValue;
     }
 
-    public Integer getValue() {
+    public Integer getNoteValue() {
         return notes;
     }
 
-    public Integer getAmount() {
+    public Integer getQuantity() {
         return quantity;
     }
 
