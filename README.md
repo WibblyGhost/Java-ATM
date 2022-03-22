@@ -1,5 +1,5 @@
 
-# Java-ATM
+# Java ATM
 
 ![Mahi Markets Coding Challenge Link](mahimarkets-java-test[1475].pdf)
 
